@@ -52,16 +52,18 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
         }
 
       } else if(buttonText == ".") {
-        equationFontSize = 48.0;
-        resultFontSize = 38.0;
-        if (equation == "0") {
-          equation = buttonText;
-        } else {
-          equation = equation + buttonText;
-        }
+
         String res = equation.substring(equation.length - 1);
+        print("$res");
         if(res == ".") {
-          equation = equation.substring(0, equation.length);
+        }else{
+          equationFontSize = 48.0;
+          resultFontSize = 38.0;
+          if(equation == "0"){
+            equation = buttonText;
+          }else {
+            equation = equation + buttonText;
+          }
         }
 
 
