@@ -59,11 +59,12 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
         } else {
           equation = equation + buttonText;
         }
-      }
-
         String res = equation.substring(equation.length - 1);
         if(res == ".") {
           equation = equation.substring(0, equation.length);
+        }
+
+
       } else if(buttonText == "="){
         equationFontSize = 38.0;
         resultFontSize = 48.0;
@@ -84,8 +85,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
         }
 
       }
-
-      else{
+        else{
         equationFontSize = 48.0;
         resultFontSize = 38.0;
         if(equation == "0"){
@@ -166,8 +166,8 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                     TableRow(
                         children: [
                           buildButton("C", 1, Color(0xffdbd9d9), Colors.black),
-                          buildButton("", 1, Color(0xffdbd9d9), Colors.black),
                           buildButton("⌫", 1, Color(0xffdbd9d9), Colors.black),
+                          buildButton("", 1, Color(0xffdbd9d9), Colors.black),
                         ]
                     ),
 
