@@ -27,12 +27,15 @@ class SimpleCalculator extends StatefulWidget {
 
 class _SimpleCalculatorState extends State<SimpleCalculator> {
 
+  // INICIALIZACION DE VARIABLES PARA LA ECUACION Y RESULTADOS
   String equation = "0";
   String result = "0";
   String expression = "";
   double equationFontSize = 38.0;
   double resultFontSize = 48.0;
 
+
+  // INGRESO DE DATOS MEDIANTE BOTONES
   buttonPressed(String buttonText){
     setState(() {
       if(buttonText == "C"){
@@ -40,18 +43,28 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
         result = "0";
         equationFontSize = 38.0;
         resultFontSize = 48.0;
-      }
-
-      else if(buttonText == "⌫"){
+      } else if(buttonText == "⌫"){
         equationFontSize = 48.0;
         resultFontSize = 38.0;
         equation = equation.substring(0, equation.length - 1);
         if(equation == ""){
           equation = "0";
         }
+
+      } else if(buttonText == ".") {
+        equationFontSize = 48.0;
+        resultFontSize = 38.0;
+        if (equation == "0") {
+          equation = buttonText;
+        } else {
+          equation = equation + buttonText;
+        }
       }
 
-      else if(buttonText == "="){
+        String res = equation.substring(equation.length - 1);
+        if(res == ".") {
+          equation = equation.substring(0, equation.length);
+      } else if(buttonText == "="){
         equationFontSize = 38.0;
         resultFontSize = 48.0;
 
@@ -59,6 +72,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
         expression = expression.replaceAll('×', '*');
         expression = expression.replaceAll('÷', '/');
 
+        // REALIZANDO LAS OPERACIONES "+" "-" "×" "÷" utilizando la biblioteca math_expressions
         try{
           Parser p = Parser();
           Expression exp = p.parse(expression);
@@ -83,6 +97,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
     });
   }
 
+  // DEFINIR CARACTERISTICAS DE LOS BOTONES
   Widget buildButton(String buttonText, double buttonHeight, Color buttonColor, Color textcolor){
     final ButtonStyle flatButtonStyle = TextButton.styleFrom(
       shape: RoundedRectangleBorder(
@@ -122,14 +137,14 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
       body: Column(
         children: <Widget>[
 
-
+          // TAMAÑO DE LETRA DE LA ECUACION
           Container(
             alignment: Alignment.centerRight,
             padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
             child: Text(equation, style: TextStyle(fontSize: equationFontSize),),
           ),
 
-
+          // TAMAÑO DE LETRA DE LA RESPUESTA
           Container(
             alignment: Alignment.centerRight,
             padding: EdgeInsets.fromLTRB(10, 30, 10, 0),
@@ -141,7 +156,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
             child: Divider(),
           ),
 
-
+          // AÑADIENDO LOS BOTONES POR FILAS
           Row(mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
@@ -151,8 +166,8 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                     TableRow(
                         children: [
                           buildButton("C", 1, Color(0xffdbd9d9), Colors.black),
+                          buildButton("", 1, Color(0xffdbd9d9), Colors.black),
                           buildButton("⌫", 1, Color(0xffdbd9d9), Colors.black),
-                          buildButton("÷", 1, Color(0xffdbd9d9), Colors.black),
                         ]
                     ),
 
@@ -191,7 +206,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                 ),
               ),
 
-
+              // AÑADIENDO LOS BOTONES DE OPERACIONES EN UNA COLUMNA
               Container(
                 width: MediaQuery.of(context).size.width * 0.25,
                 child: Table(
